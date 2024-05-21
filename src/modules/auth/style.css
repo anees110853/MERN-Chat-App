@@ -1,0 +1,32 @@
+.avatar-grid{
+    text-align: center;
+    cursor: pointer;
+}
+.avatar-image{
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+}
+
+.remove-icon{
+    color: red;
+    background: whitesmoke;
+    border-radius: 50%;
+    border: 1px solid grey;
+}
+
+.camera-icon{
+    margin-left: -40px;
+    font-size: large;
+    color: grey !important;
+}
+
+.cross-icon{
+    position: absolute;
+    margin-left: 14%;
+    margin-top: 1.5%;
+    color: red;
+    border: 1px solid grey;
+    border-radius: 50%;
+    font-weight:bolder !important;
+}
