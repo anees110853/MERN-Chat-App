@@ -2,10 +2,11 @@
     background: url('https://img.freepik.com/free-vector/simple-blue-gradient-background-vector-business_53876-143439.jpg?w=1480&t=st=1716297122~exp=1716297722~hmac=6c40ea7f8c4db7d52e0ee9badeeb783f73b6c76208fcbfbd3169e2f2f0e5e18a') no-repeat center center;
     background-size: 100% 100%;
     display: flex;
-    position: absolute;
+    position:fixed;
     width: 100%;
     height: 100%;
     justify-content: center;
+    align-items: center;
   }
   
   /* Hide background image for small screens */
@@ -15,3 +16,7 @@
     }
   }
   
+  .spinner{
+    margin: auto auto;
+    position: absolute;
+}
