@@ -12,7 +12,7 @@ const WelcomeMessage = (props) => {
         color: '#1976d2',
         textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)',
         padding: '20px',
-        background: 'linear-gradient(90deg, #1976d2, #e52e71)',
+        background: 'linear-gradient(90deg, #1976d2, #a152b0,#1976d2,#a152b0)',
         WebkitBackgroundClip: 'text',
         WebkitTextFillColor: 'transparent',
         textAlign: 'center',
