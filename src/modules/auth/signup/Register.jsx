@@ -118,7 +118,7 @@ export default function Register() {
         <Container
           component="main"
           sx={{
-            width: '40%',
+            width: '30%',
           }}
         >
           <CssBaseline />
@@ -190,6 +190,7 @@ export default function Register() {
                     fullWidth
                     id="firstName"
                     autoFocus
+                    size="small"
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -203,6 +204,7 @@ export default function Register() {
                     id="lastName"
                     name="lastName"
                     autoComplete="family-name"
+                    size="small"
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -216,6 +218,7 @@ export default function Register() {
                     id="email"
                     name="email"
                     autoComplete="email"
+                    size="small"
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -240,6 +243,7 @@ export default function Register() {
                     }
                     label="Password"
                     name="password"
+                    size="small"
                   />
                 </Grid>
               </Grid>

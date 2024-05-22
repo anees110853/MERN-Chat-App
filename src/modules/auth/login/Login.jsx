@@ -23,17 +23,15 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import ProgressBar from '../../../components/ProgressBar';
+import { login } from '../../../services/authService';
+import { useNavigate } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
 export default function Register() {
-  const fileInputRef = useRef(null);
   const [spinner, setSpinner] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
-  const handleAvatarClick = () => {
-    fileInputRef.current.click();
-  };
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -60,6 +58,19 @@ export default function Register() {
       );
       return;
     }
+
+    setSpinner(true);
+    login(user?.email, user?.password)
+      .then((data) => {
+        localStorage.setItem('user', JSON.stringify(data));
+        localStorage.setItem('access_token', data?.access_token);
+        navigate('/home-page');
+        setSpinner(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setSpinner(false);
+      });
   };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -75,7 +86,7 @@ export default function Register() {
         <Container
           component="main"
           sx={{
-            width: '30%',
+            width: '25%',
           }}
         >
           <CssBaseline />
@@ -120,7 +131,7 @@ export default function Register() {
                   fullWidth
                   id="email"
                   name="email"
-                  autoComplete="email"
+                  size="small"
                 />
               </Grid>
               <Grid item xs={12} mt={3}>
@@ -131,6 +142,7 @@ export default function Register() {
                   id="outlined-adornment-password"
                   type={showPassword ? 'text' : 'password'}
                   fullWidth
+                  size="small"
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton

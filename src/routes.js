@@ -3,6 +3,8 @@ import Login from './modules/auth/login/Login';
 import Register from './modules/auth/signup/Register';
 import ForgotPassword from './modules/auth/forgot-password/ForgotPassword';
 import ResetPassword from './modules/auth/reset-password/ResetPassword';
+import HomePage from './modules/chat/HomePage';
+import ProtectedRoute from './components/ProtectedRout';
 
 export const routes = createBrowserRouter([
   {
@@ -24,5 +26,9 @@ export const routes = createBrowserRouter([
   {
     path: '/reset-password',
     element: <ResetPassword />,
+  },
+  {
+    path: '/home-page',
+    element: <ProtectedRoute element={HomePage} />,
   },
 ]);
