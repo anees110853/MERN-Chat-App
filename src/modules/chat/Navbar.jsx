@@ -20,6 +20,7 @@ import Badge from '@mui/material/Badge';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import UserListModal from '../../Modals/UserListModal';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -67,6 +68,10 @@ export default function PrimarySearchAppBar() {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const [userListModal, setUserListModal] = useState(false);
+
+  const user = JSON.parse(localStorage.getItem('user'));
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -197,6 +202,7 @@ export default function PrimarySearchAppBar() {
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
+              onClick={() => setUserListModal(true)}
             >
               <AddIcon />
             </IconButton>
@@ -226,7 +232,11 @@ export default function PrimarySearchAppBar() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              {user?.image ? (
+                <img src={user?.image} alt="" className="avatar-image" />
+              ) : (
+                <AccountCircle />
+              )}
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
@@ -245,6 +255,10 @@ export default function PrimarySearchAppBar() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
+      <UserListModal
+        open={userListModal}
+        handleClose={() => setUserListModal(false)}
+      />
     </Box>
   );
 }

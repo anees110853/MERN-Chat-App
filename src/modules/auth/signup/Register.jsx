@@ -32,6 +32,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import ProgressBar from '../../../components/ProgressBar';
+import { useNavigate } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
@@ -40,6 +41,7 @@ export default function Register() {
   const [userImage, setUserImage] = useState();
   const [spinner, setSpinner] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleAvatarClick = () => {
     fileInputRef.current.click();
@@ -77,7 +79,9 @@ export default function Register() {
     setSpinner(true);
     signup(user)
       .then((data) => {
-        console.log('response', data);
+        localStorage.setItem('user', JSON.stringify(data));
+        localStorage.setItem('access_token', data?.access_token);
+        navigate('/home-page');
         setSpinner(false);
       })
       .catch((error) => {
@@ -90,7 +94,7 @@ export default function Register() {
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files && e.target.files[0];
     if (selectedFile?.size >= MIN_FILE_SIZE) {
-      toast.error('File Size should be less than 10MB');
+      toast.error('File Size should be less than 5MB');
       return;
     }
 
@@ -163,7 +167,7 @@ export default function Register() {
                   <img
                     src={userImage ? userImage : userAvatar}
                     alt="Avatar"
-                    className="avatar-image"
+                    className="avatar-image1"
                   />
                   <CameraAltOutlinedIcon className="camera-icon" />
                 </Box>

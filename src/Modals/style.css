@@ -1,0 +1,9 @@
+
+.single-user-data{
+    cursor: pointer;
+}
+
+
+.single-user-data:hover{
+    background: lightgray;
+}
