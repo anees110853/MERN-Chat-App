@@ -21,6 +21,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import UserListModal from '../../Modals/UserListModal';
+import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -73,6 +74,8 @@ export default function PrimarySearchAppBar() {
 
   const user = JSON.parse(localStorage.getItem('user'));
 
+  const navigate = useNavigate();
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -88,6 +91,13 @@ export default function PrimarySearchAppBar() {
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const handleLogout = () => {
+    localStorage.clear('access_token');
+    localStorage.clear('user');
+    navigate('/login');
+    handleMenuClose();
   };
 
   const menuId = 'primary-search-account-menu';
@@ -108,7 +118,7 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
   );
 
@@ -255,10 +265,12 @@ export default function PrimarySearchAppBar() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-      <UserListModal
-        open={userListModal}
-        handleClose={() => setUserListModal(false)}
-      />
+      {userListModal && (
+        <UserListModal
+          open={userListModal}
+          handleClose={() => setUserListModal(false)}
+        />
+      )}
     </Box>
   );
 }

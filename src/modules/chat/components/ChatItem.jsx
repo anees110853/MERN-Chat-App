@@ -1,9 +1,7 @@
 import React from 'react';
 import userImage from '../../../assets/images/user-profile.png';
 import './styles.css';
-const ChatItem = ({ user }) => {
-  const { avatar, name } = user;
-
+const ChatItem = ({ name, avatar }) => {
   return (
     <div className="chat-item">
       <img

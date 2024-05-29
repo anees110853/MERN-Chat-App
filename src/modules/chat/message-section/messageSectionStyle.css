@@ -1,0 +1,29 @@
+.message-header-section{
+    border: 1px solid gray;
+    border-radius: 5px;
+    box-shadow: 30px;
+    height: 10%;
+    padding:0% 1%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 5;
+}
+
+.message-body-section{
+    height: 83.5%;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+
+ }
+
+ .message-footer-section{
+    
+ }
+
+ .message-container{
+    height: 100%;
+    border-radius: 5px;
+    padding: 0;
+    margin: 0;
+ }

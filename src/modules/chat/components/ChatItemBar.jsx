@@ -1,50 +1,66 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ChatItem from './ChatItem';
 import './styles.css';
+import { getMyChats } from '../../../services/chatService';
+import ProgressBar from '../../../components/ProgressBar';
+import { toast } from 'react-toastify';
+import io from 'socket.io-client';
+import { SOCKET_EVENTS } from '../../../constants';
+const socket = io('http://localhost:4000');
 
-const ChatItemBar = () => {
-  const randomData = [
-    { id: 1, name: 'John Doe', email: 'john@example.com' },
-    { id: 2, name: 'Jane Smith', email: 'jane@example.com' },
-    {
-      id: 3,
-      name: 'Michael Johnson',
-      email: 'michael@example.com',
-      avatar:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVFXyUK2ruN63qvxld3PCTI1oQmNgAjbpeG69ghMI71Q&s',
-    },
-    { id: 4, name: 'Emily Brown', email: 'emily@example.com' },
-    { id: 5, name: 'William Taylor', email: 'william@example.com' },
-    {
-      id: 6,
-      name: 'Olivia Martinez',
-      email: 'olivia@example.com',
-      avatar:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVFXyUK2ruN63qvxld3PCTI1oQmNgAjbpeG69ghMI71Q&s',
-    },
-    {
-      id: 7,
-      name: 'James Anderson',
-      email: 'james@example.com',
-      avatar:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSuEUr_cUWiTzZC4YmS-ra61Wp_-gTOU9oKvg2ZY6A8g&s',
-    },
-    { id: 8, name: 'Sophia Wilson', email: 'sophia@example.com' },
-    { id: 9, name: 'Benjamin Thomas', email: 'benjamin@example.com' },
-    { id: 10, name: 'Emma Garcia', email: 'emma@example.com' },
-  ];
+const ChatItemBar = ({ setChatId }) => {
+  const [chats, setChats] = useState([]);
+  const [spinner, setSpinner] = useState(false);
+  const [selectedChat, seSelectedChat] = useState();
+
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  const fetchChats = () => {
+    setSpinner(true);
+    getMyChats()
+      .then((data) => {
+        setChats(data?.data);
+        setSpinner(false);
+        setChatId(data?.data[0]?._id);
+      })
+      .catch((error) => {
+        toast.error('Something Went Wrong');
+        setSpinner(false);
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    fetchChats();
+
+    socket.on('connection', (data) => {
+      console.log('connected');
+    });
+    socket.on(SOCKET_EVENTS.re_fetch_chats, (data) => {
+      if (data?.ids?.includes(user?._id)) {
+        fetchChats();
+      }
+    });
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   return (
     <>
-      {randomData.map((user) => {
+      {spinner && <ProgressBar />}
+      {chats?.map((chat) => {
         return (
           <div
-            key={user?.id}
+            key={chat?._id}
             role="button"
-            onClick={() => console.log(user?.id)}
+            onClick={() => setChatId(chat?._id)}
             className="chat-item-section"
           >
-            <ChatItem user={user} />
+            <ChatItem
+              name={chat?.isGroup ? chat?.groupName : chat?.users[0]?.name}
+              avatar={!chat?.isGroup && chat?.users[0]?.image}
+            />
           </div>
         );
       })}
