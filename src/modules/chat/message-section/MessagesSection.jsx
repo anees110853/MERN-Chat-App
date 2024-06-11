@@ -12,6 +12,8 @@ import SendIcon from '@mui/icons-material/Send';
 import { getChatDetail } from '../../../services/chatService';
 import ProgressBar from '../../../components/ProgressBar';
 import userImage from '../../../assets/images/user-profile.png';
+import MessageView from './MessageView';
+import { createMessage } from '../../../services/messageService';
 
 const MessagesSection = ({ chatId }) => {
   const [spinner, setSpinner] = useState(false);
@@ -49,9 +51,23 @@ const MessagesSection = ({ chatId }) => {
     if (!text) {
       return;
     }
-    console.log(text);
-    //send message
+    setSpinner(true);
+    createMessage({
+      chatId: chat?._id,
+      sender: sender?._id,
+      text: text,
+    })
+      .then((data) => {
+        console.log(data);
+        setText('');
+        setSpinner(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setSpinner(false);
+      });
   };
+
   return (
     <>
       {spinner && <ProgressBar />}
@@ -72,7 +88,9 @@ const MessagesSection = ({ chatId }) => {
         </div>
 
         {/* Messages Section */}
-        <div className="message-body-section"></div>
+        <div className="message-body-section">
+          <MessageView chatId={chat?._id} />
+        </div>
 
         {/* message footer input section */}
         <div className="message-footer-section">

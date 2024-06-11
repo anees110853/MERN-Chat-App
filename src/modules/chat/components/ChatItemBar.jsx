@@ -36,7 +36,9 @@ const ChatItemBar = ({ setChatId }) => {
     socket.on('connection', (data) => {
       console.log('connected');
     });
+
     socket.on(SOCKET_EVENTS.re_fetch_chats, (data) => {
+      console.log('first', data);
       if (data?.ids?.includes(user?._id)) {
         fetchChats();
       }

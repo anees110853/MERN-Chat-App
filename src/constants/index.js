@@ -8,4 +8,5 @@ export const MIN_FILE_SIZE = 5000000;
 
 export const SOCKET_EVENTS = {
   re_fetch_chats: 'RE_FETCH_CHATS',
+  re_fetch_messages: 'RE_FETCH_MESSAGES',
 };
