@@ -58,7 +58,6 @@ const MessagesSection = ({ chatId }) => {
       text: text,
     })
       .then((data) => {
-        console.log(data);
         setText('');
         setSpinner(false);
       })
@@ -114,6 +113,8 @@ const MessagesSection = ({ chatId }) => {
               }
               placeholder="Enter text here"
               onChange={(data) => setText(data.target.value)}
+              // key={text}
+              value={text}
             />
           </Grid>
         </div>

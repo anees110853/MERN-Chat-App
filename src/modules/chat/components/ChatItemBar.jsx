@@ -56,8 +56,13 @@ const ChatItemBar = ({ setChatId }) => {
           <div
             key={chat?._id}
             role="button"
-            onClick={() => setChatId(chat?._id)}
-            className="chat-item-section"
+            onClick={() => {
+              setChatId(chat?._id);
+              seSelectedChat(chat?._id);
+            }}
+            className={`chat-item-section ${
+              chat?._id === selectedChat && 'active-chat'
+            }`}
           >
             <ChatItem
               name={chat?.isGroup ? chat?.groupName : chat?.users[0]?.name}

@@ -26,3 +26,8 @@
   .chat-item-section:hover {
     background-color: aliceblue; 
   }
+
+  .active-chat{
+    background-color: #f0f0f0;
+
+  }

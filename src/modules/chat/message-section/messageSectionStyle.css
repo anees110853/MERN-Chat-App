@@ -48,10 +48,30 @@
  
  .receiver-class {
    align-self: flex-start;
-   background-color: #f1f1f1; 
+   background-color: #eaf7ff; 
    padding: 10px;
    border-radius: 10px;
    max-width: fit-content;
    margin: 10px 0;
  }
  
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  gap: 50px;
+  color: #1976d2;
+}
+
+.message-date {
+  font-size: 0.8em;
+  color: #888;
+
+}
+
+.message-body {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
