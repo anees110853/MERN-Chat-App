@@ -22,6 +22,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import UserListModal from '../../Modals/UserListModal';
 import { useNavigate } from 'react-router-dom';
+import CreateGroupModal from '../../Modals/CreateGroupModal';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -71,6 +72,8 @@ export default function PrimarySearchAppBar() {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const [userListModal, setUserListModal] = useState(false);
+
+  const [groupModal, setGroupModal] = useState(false);
 
   const user = JSON.parse(localStorage.getItem('user'));
 
@@ -220,11 +223,12 @@ export default function PrimarySearchAppBar() {
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
+              onClick={() => setGroupModal(true)}
             >
               <GroupIcon />
             </IconButton>
 
-            <IconButton
+            {/* <IconButton
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
@@ -232,7 +236,7 @@ export default function PrimarySearchAppBar() {
               <Badge badgeContent={17} color="error">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
+            </IconButton> */}
             <IconButton
               size="large"
               edge="end"
@@ -269,6 +273,12 @@ export default function PrimarySearchAppBar() {
         <UserListModal
           open={userListModal}
           handleClose={() => setUserListModal(false)}
+        />
+      )}
+      {groupModal && (
+        <CreateGroupModal
+          open={groupModal}
+          handleClose={() => setGroupModal(false)}
         />
       )}
     </Box>

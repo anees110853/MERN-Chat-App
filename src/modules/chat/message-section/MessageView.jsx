@@ -17,7 +17,10 @@ const MessageView = ({ chatId }) => {
   const chatContainerRef = useRef(null);
 
   const setData = (data) => {
-    setMessages((prev) => [...prev, ...data]);
+    if (data?.length) {
+      // setMessages((prev) => [...prev, ...data]);
+      setMessages(data);
+    }
   };
 
   const fetchMessages = (pageNo) => {
@@ -46,6 +49,7 @@ const MessageView = ({ chatId }) => {
     setPageNo(1);
     setPageSize(10);
     setPageCount(null);
+    setMessages([]);
   }, [chatId]);
 
   useEffect(() => {
@@ -102,7 +106,7 @@ const MessageView = ({ chatId }) => {
           <div className="message-header">
             <strong>{message.senderName}</strong>
             <span className="message-date">
-              {moment(message.createdAt).format('hh:mm A')}
+              {moment(message.createdAt).format('ddd MMM DD, YYYY, hh:mm A')}
             </span>
           </div>
           <div className="message-body">{message?.message}</div>

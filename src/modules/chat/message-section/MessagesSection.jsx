@@ -41,7 +41,13 @@ const MessagesSection = ({ chatId }) => {
   }, [chatId]);
 
   useEffect(() => {
-    if (chat?.users?.length) {
+    console.log('chat', chat);
+
+    if (chat && chat?.isGroup) {
+      setMember({
+        name: chat?.groupName,
+      });
+    } else if (chat?.users?.length) {
       const foundUser = chat?.users?.find((user) => user?._id !== sender?._id);
       setMember(foundUser);
     }

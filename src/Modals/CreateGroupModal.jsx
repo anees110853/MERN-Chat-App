@@ -10,6 +10,7 @@ import {
   ListItemText,
   Typography,
   IconButton,
+  Checkbox,
   Button,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -19,17 +20,21 @@ import { createChat } from '../services/chatService';
 import ProgressBar from '../components/ProgressBar';
 import { toast } from 'react-toastify';
 
-const UserListModal = ({ open, handleClose }) => {
+const CreateGroupModal = ({ open, handleClose }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [spinner, setSpinner] = useState(false);
+  const [groupData, setGroupData] = useState({
+    groupName: '',
+    users: [],
+    isGroup: true,
+  });
   const [bounceSearch, setBounceSearch] = useState('');
   const searchTimeoutRef = useRef(null);
 
   const fetchAllUsers = () => {
     getAllUsers({ search: bounceSearch })
       .then((data) => {
-        console.log('first', data);
         setFilteredUsers(data?.data);
       })
       .catch((error) => {
@@ -55,6 +60,29 @@ const UserListModal = ({ open, handleClose }) => {
         handleClose();
         setSpinner(false);
       });
+  };
+
+  const handleCheckboxChange = (userId) => {
+    setGroupData((prev) => {
+      const users = prev.users.includes(userId)
+        ? prev.users.filter((id) => id !== userId)
+        : [...prev.users, userId];
+      return { ...prev, users };
+    });
+  };
+
+  const handleSubmit = () => {
+    if (!groupData.groupName) {
+      toast.error('Group Name Required');
+      return;
+    }
+
+    if (groupData.users.length < 2) {
+      toast.error('Select at least 2 users');
+      return;
+    }
+
+    createNewChat(groupData);
   };
 
   const handleSearch = (data) => {
@@ -85,14 +113,26 @@ const UserListModal = ({ open, handleClose }) => {
             }}
           >
             <Typography variant="h6" id="user-list-modal-title">
-              User List
+              New Group
             </Typography>
             <IconButton onClick={handleClose}>
               <CloseIcon />
             </IconButton>
           </Box>
+          <Box>
+            <TextField
+              label="Enter Group Name"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={groupData?.groupName}
+              onChange={(e) =>
+                setGroupData((prev) => ({ ...prev, groupName: e.target.value }))
+              }
+            />
+          </Box>
           <TextField
-            label="Search Users"
+            label="Search user"
             variant="outlined"
             fullWidth
             margin="normal"
@@ -108,19 +148,31 @@ const UserListModal = ({ open, handleClose }) => {
           >
             <List>
               {filteredUsers.map((user) => (
-                <ListItem
-                  key={user?._id}
-                  className="single-user-data"
-                  role="button"
-                  onClick={() => createNewChat({ users: [user?._id] })}
-                >
+                <ListItem key={user?._id} className="single-user-data">
                   <ListItemAvatar>
                     <Avatar src={user?.image} />
                   </ListItemAvatar>
                   <ListItemText primary={user?.name} secondary={user?.email} />
+                  <Checkbox
+                    checked={groupData.users.includes(user._id)}
+                    onChange={() => handleCheckboxChange(user._id)}
+                    color="primary"
+                  />
                 </ListItem>
               ))}
             </List>
+          </Box>
+          <Box className="action-buttons">
+            <Button variant="outlined" color="error" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              href="#contained-buttons"
+              onClick={handleSubmit}
+            >
+              Create
+            </Button>
           </Box>
         </Box>
       </Modal>
@@ -140,4 +192,4 @@ const modalStyle = {
   borderRadius: '10px',
 };
 
-export default UserListModal;
+export default CreateGroupModal;
