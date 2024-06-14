@@ -6,6 +6,8 @@ import ProgressBar from '../../../components/ProgressBar';
 import { toast } from 'react-toastify';
 import io from 'socket.io-client';
 import { SOCKET_EVENTS } from '../../../constants';
+import groupImage from '../../../assets/images/group-image.png';
+
 const socket = io('http://localhost:4000');
 
 const ChatItemBar = ({ setChatId }) => {
@@ -66,7 +68,7 @@ const ChatItemBar = ({ setChatId }) => {
           >
             <ChatItem
               name={chat?.isGroup ? chat?.groupName : chat?.users[0]?.name}
-              avatar={!chat?.isGroup && chat?.users[0]?.image}
+              avatar={!chat?.isGroup ? chat?.users[0]?.image : groupImage}
             />
           </div>
         );

@@ -18,8 +18,8 @@ const MessageView = ({ chatId }) => {
 
   const setData = (data) => {
     if (data?.length) {
-      // setMessages((prev) => [...prev, ...data]);
-      setMessages(data);
+      setMessages((prev) => [...prev, ...data]);
+      // setMessages(data);
     }
   };
 

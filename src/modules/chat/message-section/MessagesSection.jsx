@@ -14,6 +14,7 @@ import ProgressBar from '../../../components/ProgressBar';
 import userImage from '../../../assets/images/user-profile.png';
 import MessageView from './MessageView';
 import { createMessage } from '../../../services/messageService';
+import groupImage from '../../../assets/images/group-image.png';
 
 const MessagesSection = ({ chatId }) => {
   const [spinner, setSpinner] = useState(false);
@@ -82,7 +83,13 @@ const MessagesSection = ({ chatId }) => {
         <div className="message-header-section">
           <div>
             <img
-              src={member?.image ? member.image : userImage}
+              src={
+                chat?.isGroup
+                  ? groupImage
+                  : member?.image
+                  ? member.image
+                  : userImage
+              }
               alt=""
               className="avatar-image"
             />

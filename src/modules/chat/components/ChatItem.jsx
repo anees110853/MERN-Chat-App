@@ -1,7 +1,7 @@
 import React from 'react';
 import userImage from '../../../assets/images/user-profile.png';
 import './styles.css';
-const ChatItem = ({ name, avatar }) => {
+const ChatItem = ({ name, avatar, isAdmin }) => {
   return (
     <div className="chat-item">
       <img
@@ -11,6 +11,7 @@ const ChatItem = ({ name, avatar }) => {
       />
 
       <p className="user-name">{name}</p>
+      {isAdmin && <p className="admin-text">(Admin)</p>}
     </div>
   );
 };

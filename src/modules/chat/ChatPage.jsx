@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './chatStyle.css'; // Import CSS file for styling
 import ChatItemBar from './components/ChatItemBar';
 import MessagesSection from './message-section/MessagesSection';
+import ChatDetail from './message-section/ChatDetail';
 
 const ChatPage = () => {
   const [chatId, setChatId] = useState();
@@ -20,8 +21,7 @@ const ChatPage = () => {
 
       {/* Right Profile View */}
       <div className="profile-view">
-        {/* Content of Right Profile View */}
-        Right Profile View
+        <ChatDetail chatId={chatId} />
       </div>
     </div>
   );
