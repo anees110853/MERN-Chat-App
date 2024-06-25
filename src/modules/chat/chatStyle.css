@@ -1,0 +1,20 @@
+.chat-page-container {
+    display: flex;
+    height: 92.5vh; 
+  }
+  
+  .sidebar {
+    flex: 1; 
+    background-color: #eaf7ff;   
+}
+  
+  .user-chat {
+    flex: 3; 
+    background-color: #f0f0f0; 
+  }
+  
+  .profile-view {
+    flex: 1; 
+    background-color: #eaf7ff; 
+  }
+  
